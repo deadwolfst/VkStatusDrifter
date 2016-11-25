@@ -1,0 +1,44 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+apply plugin: 'application'
+apply from: 'template.properties'
+/*
+//template.properties example:
+ext {
+    clientId = '0000000'
+    clientSecret = '00000000000000000000'
+    clientEmail = 'example@hell.com'
+    clientPass = 'password123'
+}
+*/
+
+mainClassName = "com.vk.api.examples.oauth.user.Application"
+
+ext {
+    log4jVersion = '2.7'
+    jsoupVersion = '1.7.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4jVersion
+    compile group: 'org.jsoup', name: 'jsoup', version: jsoupVersion
+    compile 'com.vk.api:sdk:0.3.5' 
+}
+
+
+processResources {
+    eachFile { details ->
+        if (details.name.endsWith('.properties')) {
+            details.filter(ReplaceTokens, tokens: [
+                    'client.email': clientEmail,
+                    'client.pass': clientPass,
+                    'client.id': clientId,
+                    'client.secret': clientSecret,
+            ])
+        }
+    }
+}
