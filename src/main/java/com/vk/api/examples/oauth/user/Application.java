@@ -52,7 +52,7 @@ public class Application {
                 public void run() {
                     try {
                         vk.status().set(actor)
-                            .text("Java test says: server's " +
+                            .text("Java says: server's " +
                                 execute("uptime -p | awk '{ print $1 $2 $3 $4 substr($5, 0, length($5)-1); }'"))
                             .execute();
                     } catch (Exception e) {
