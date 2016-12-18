@@ -31,9 +31,25 @@ import java.util.Calendar;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    /*
+    private static volatile void Map.Entry<Integer, String> credentials;
+    private static volatile void UserActor actor = new UserActor(credentials.getKey(), credentials.getValue()); 
+    */
+    private static final int initialDelay;
+
+    static {
+        initialDelay = 0;
+    }
+    
+    public static void main(String[] args) {
         Properties properties = loadConfiguration();
-        initServer(properties);
+        try {
+            initServer(properties);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Unexpected exception! Exiting.");
+            System.exit(1);
+        }
     }
 
     private static void initServer(Properties properties) throws Exception {
@@ -41,44 +57,16 @@ public class Application {
         String clientEmail = properties.getProperty("client.email");
         String clientPass = properties.getProperty("client.pass");
 
-        Map.Entry<Integer, String> credentials = CredentialsManager.authenticate(clientId, clientEmail, clientPass, properties);
+        Map.Entry<Integer, String>  credentials = CredentialsManager.authenticate(clientId, clientEmail, clientPass, properties);
 
         // Create vkCilent, scheduler and begin DRIFTING
         VkApiClient vk = new VkApiClient(new HttpTransportClient());
         UserActor actor = new UserActor(credentials.getKey(), credentials.getValue()); 
 
+        Drifter drifter = new Drifter(actor, vk, clientId, clientEmail, clientPass, properties);
         Executors.newScheduledThreadPool(1)
-            .scheduleAtFixedRate(new Runnable() {
-                public void run() {
-                    try {
-                        vk.status().set(actor)
-                            .text("Java says: server's " +
-                                execute("uptime -p | awk '{ print $1 $2 $3 $4 substr($5, 0, length($5)-1); }'"))
-                            .execute();
-                    } catch (Exception e) {
-                        System.out.println("Exception: " + e.toString());
-                    }
-                }
-            }, 30 - Calendar.getInstance().get(Calendar.MINUTE) % 30,
+            .scheduleAtFixedRate(drifter, initialDelay,
             30, MINUTES);
-    }
-
-    private static String execute(String command) {
-        StringBuffer output = new StringBuffer();
-        Process p;
-        try {
-            p = Runtime.getRuntime().exec(command);
-            p.waitFor();
-            BufferedReader reader =
-                new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = "";
-            while ((line = reader.readLine())!= null) {
-                output.append(line + "\n");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return output.toString();
     }
 
     private static Properties loadConfiguration() {
