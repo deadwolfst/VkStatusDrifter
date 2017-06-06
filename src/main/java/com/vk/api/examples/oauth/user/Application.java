@@ -1,40 +1,19 @@
 package com.vk.api.examples.oauth.user;
 
-import static java.util.concurrent.TimeUnit.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import org.jsoup.Jsoup;
-import org.jsoup.Connection;
-import org.jsoup.Connection.Response;
-import org.jsoup.Connection.Method;
-import org.jsoup.helper.Validate;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.io.InputStream;
-import java.util.Properties;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.regex.Pattern;
-import java.util.Calendar;
+import java.util.Properties;
+import java.util.concurrent.Executors;
+
+import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Application {
 
-    /*
-    private static volatile void Map.Entry<Integer, String> credentials;
-    private static volatile void UserActor actor = new UserActor(credentials.getKey(), credentials.getValue()); 
-    */
     private static final int initialDelay;
 
     static {
