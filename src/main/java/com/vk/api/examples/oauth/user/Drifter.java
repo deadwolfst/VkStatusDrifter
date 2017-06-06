@@ -54,7 +54,7 @@ public class Drifter implements Runnable {
                 "/bin/bash",
                 "-c",
                 "uptime -p | awk '{ print $1, $2, $3, $4, substr($5, 0, length($5)-1); };'; cat $HOME/status;" +
-                        " echo '. '; fortune -n 70 -s;"
+                        " echo '. '; fortune -n 50 -s;"
             };
             vk.status().set(actor)
                 .text("server " + execute(command))
