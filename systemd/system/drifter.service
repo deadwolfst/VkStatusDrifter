@@ -1,0 +1,10 @@
+[Unit]
+Description=Vk Ultimate Status Drifter
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /home/whobscr/bin/vkstatusdrifter.jar
+User=whobscr
+
+[Install]
+WantedBy=multi-user.target

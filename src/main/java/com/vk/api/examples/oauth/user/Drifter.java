@@ -50,9 +50,13 @@ public class Drifter implements Runnable {
 
     public void run(){
         try {
+            String[] command = {
+                "/bin/bash",
+                "-c",
+                "uptime -p | awk '{ print $1, $2, $3, $4, substr($5, 0, length($5)-1); };'; cat $HOME/status"
+            };
             vk.status().set(actor)
-                .text("Java says: server's " +
-                    execute("uptime -p | awk '{ print $1 $2 $3 $4 substr($5, 0, length($5)-1); }'"))
+                .text("server " + execute(command))
                 .execute();
         } catch (Exception e) {
             System.out.println("Exception: " + e.toString());
@@ -62,13 +66,13 @@ public class Drifter implements Runnable {
                 run();
             } catch (Exception ue) {
                 ue.printStackTrace();
-                System.out.println("Unexpected error! Exiting.");
+                System.out.println("Unexpected error! " + ue.toString() + " Exiting.");
                 System.exit(1);
             }
         }
     }
 
-    private static String execute(String command) {
+    private static String execute(String[] command) {
         StringBuffer output = new StringBuffer();
         Process p;
         try {

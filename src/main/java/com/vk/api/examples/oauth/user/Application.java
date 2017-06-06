@@ -47,7 +47,7 @@ public class Application {
             initServer(properties);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Unexpected exception! Exiting.");
+            System.out.println("Unexpected error! " + e.toString() + " Exiting.");
             System.exit(1);
         }
     }

@@ -45,10 +45,16 @@ task fatJar(type: Jar) {
             'Implementation-Version': '1.0',
             'Main-Class': mainClassName
     }
-    baseName = project.name + '-all'
+    baseName = "vkstatusdrifter"
+    //buildDir = new File("~/gradleBuild/" + project.name)
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
+
+task service(type: Copy) {
+    from fatJar
+    into "$home/bin"
+} 
 
 processResources {
     eachFile { details ->

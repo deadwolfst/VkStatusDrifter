@@ -100,7 +100,7 @@ public class CredentialsManager {
                     System.exit(0);
                 }
             } else {
-                System.out.println("Unexpected error!");
+                System.out.println("Unexpected error during authorization. Not authorized.");
                 System.exit(0);
             }
         }
