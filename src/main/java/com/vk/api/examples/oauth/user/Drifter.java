@@ -77,9 +77,17 @@ public class Drifter implements Runnable {
             p = Runtime.getRuntime().exec(command);
             p.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine())!= null) {
-                output.append(line).append("\n");
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            if (errorReader.readLine() != null) {
+                String line;
+                while ((line = errorReader.readLine())!= null) {
+                    output.append(line).append("\n");
+                }
+            } else {
+                String line;
+                while ((line = reader.readLine())!= null) {
+                    output.append(line).append("\n");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
