@@ -35,14 +35,17 @@ public class Drifter implements Runnable {
                         " echo -n \". Profound nonsense #$(more %s): \";" +
                         "echo $(($(more %s) + 1)) > %s; /usr/games/fortune -n 50 -s;",
                 statusFilename, counterFilename, counterFilename, counterFilename);
-        System.out.println(statusCommand);
         try {
             String[] command = {
                 "/bin/bash",
                 "-c",
                 statusCommand
             };
+            System.out.println("hell1");
+            System.out.println(statusCommand);
             String status = execute(command);
+            System.out.println("hell2");
+            System.out.println(statusCommand);
             System.out.println(status);
             int status_len = (vkStatusMaxCharacters > status.length() ?
                     status.length() : vkStatusMaxCharacters);
