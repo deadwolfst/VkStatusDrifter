@@ -15,6 +15,7 @@ public class Drifter implements Runnable {
     private static String clientEmail;
     private static Properties properties;
     private static String clientPass;
+    private long counter = 0;
 
     Drifter(UserActor a, VkApiClient v, String id, String email, String pass, Properties props) {
         actor = a;
@@ -30,8 +31,10 @@ public class Drifter implements Runnable {
             String[] command = {
                 "/bin/bash",
                 "-c",
-                "uptime -p | awk '{ print $1, $2, $3, $4, substr($5, 0, length($5)-1); };'; cat $HOME/status;" +
-                        " echo -n '. Profound nonsense: '; /usr/games/fortune -n 50 -s;"
+                String.format("uptime -p | awk '{ print $1, $2, $3, $4, " +
+                        "substr($5, 0, length($5)-1); };'; cat $HOME/status;" +
+                        " echo -n '. Profound nonsense #%s: '; /usr/games/fortune -n 50 -s;",
+                        counter)
             };
             vk.status().set(actor)
                 .text(execute(command))

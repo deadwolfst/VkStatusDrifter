@@ -14,12 +14,8 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Application {
 
-    private static final int initialDelay;
+    private static final int initialDelay = 0;
 
-    static {
-        initialDelay = 0;
-    }
-    
     public static void main(String[] args) {
         Properties properties = loadConfiguration();
         try {
@@ -44,8 +40,7 @@ public class Application {
 
         Drifter drifter = new Drifter(actor, vk, clientId, clientEmail, clientPass, properties);
         Executors.newScheduledThreadPool(1)
-            .scheduleAtFixedRate(drifter, initialDelay,
-            30, MINUTES);
+            .scheduleAtFixedRate(drifter, initialDelay, 30, MINUTES);
     }
 
     private static Properties loadConfiguration() {
