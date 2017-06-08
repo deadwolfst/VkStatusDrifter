@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Properties;
 
 public class Drifter implements Runnable {
-    private final String status_filename = "$HOME/drifter/status.txt";
-    private final String counter_filename = "$HOME/drifter/aphorism-counter.number";
     private static UserActor actor;
     private static VkApiClient vk;
     private static String clientId;
@@ -28,6 +26,10 @@ public class Drifter implements Runnable {
     }
 
     public void run(){
+        String statusFilename = "$HOME/drifter/status.txt";
+        String counterFilename = "$HOME/drifter/aphorism-counter.number";
+        int vkStatusMaxCharacters = 140;
+
         try {
             String[] command = {
                 "/bin/bash",
@@ -36,10 +38,10 @@ public class Drifter implements Runnable {
                         "substr($5, 0, length($5)-1); };'; more %s;" +
                         " echo -n '. Profound nonsense #$(more %s): ';" +
                                 "echo $(($(more %s) + 1)) > %s; /usr/games/fortune -n 50 -s;",
-                        status_filename, counter_filename, counter_filename, counter_filename)
+                        statusFilename, counterFilename, counterFilename, counterFilename)
             };
             vk.status().set(actor)
-                .text(execute(command))
+                .text(execute(command).substring(0, vkStatusMaxCharacters))
                 .execute();
         } catch (Exception e) {
             System.out.println("Exception: " + e.toString());
