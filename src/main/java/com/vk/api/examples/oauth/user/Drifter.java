@@ -40,9 +40,11 @@ public class Drifter implements Runnable {
                                 "/usr/games/fortune -n 50 -s;"*/,
                         statusFilename, counterFilename, counterFilename, counterFilename)
             };
+            String status = execute(command);
+            int status_len = (vkStatusMaxCharacters > status.length() ?
+                        vkStatusMaxCharacters : status.length());
             vk.status().set(actor)
-                .text(execute(command).substring(0, vkStatusMaxCharacters))
-                .execute();
+                .text(status.substring(0, status_len - 1)).execute();
         } catch (Exception e) {
             System.out.println("Exception: " + e.toString());
             try {
