@@ -32,24 +32,18 @@ public class Drifter implements Runnable {
 
         final String statusCommand = String.format(
                 "uptime -p | awk '{ print $1, $2, $3, $4, " +
-                        "substr($5, 0, length($5)-1); };'; echo \"$USER\"; more %s" /*+
+                        "substr($5, 0, length($5)-1); };'; " +
                         " more %s;" +
                         " echo -n \". Profound nonsense #$(more %s): \";" +
-                        "echo $(($(more %s) + 1)) > %s; /usr/games/fortune -n 50 -s;"*/,
+                        "echo $(($(more %s) + 1)) > %s; /usr/games/fortune -n 50 -s;",
                 statusFilename, counterFilename, counterFilename, counterFilename);
         try {
             String[] command = {
-                "/bin/more",
-                statusFilename
-               // statusCommand
+                "/bin/bash",
+                "-c",
+                statusCommand
             };
-            System.out.println("hell1");
-            System.out.println(statusCommand);
             String status = execute(command);
-            if (status == null) System.out.println("hell hell helhelhelh lh lhe lhel h");
-            System.out.println("hell2");
-            System.out.println(statusCommand);
-            System.out.println(status);
             int status_len = (vkStatusMaxCharacters > status.length() ?
                     status.length() : vkStatusMaxCharacters);
             vk.status().set(actor)
@@ -90,7 +84,6 @@ public class Drifter implements Runnable {
                 }
             }
         } catch (Exception e) {
-            System.out.println("hellh lhe lhelh ");
             e.printStackTrace();
         }
         return output.toString();
