@@ -35,6 +35,9 @@ public class Drifter implements Runnable {
                 statusFilename, counterFilename, counterFilename, counterFilename);
         try {
             String[] command = {
+                    "ssh",
+                    "whobscr@localhost",
+                    "-t",
                     "/home/whobscr/drifter/command.sh"
             };
             /*
