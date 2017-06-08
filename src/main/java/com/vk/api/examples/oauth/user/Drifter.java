@@ -26,8 +26,8 @@ public class Drifter implements Runnable {
     }
 
     public void run(){
-        String statusFilename = "$HOME/drifter/status.txt";
-        String counterFilename = "$HOME/drifter/aphorism-counter.number";
+        String statusFilename = "$HOME/status.txt";
+        String counterFilename = "$HOME/aphorism-counter.number";
         int vkStatusMaxCharacters = 140;
 
         final String statusCommand = String.format(
