@@ -9,13 +9,14 @@ import java.util.Map;
 import java.util.Properties;
 
 public class Drifter implements Runnable {
+    private final String status_filename = "$HOME/drifter/status.txt";
+    private final String counter_filename = "$HOME/drifter/aphorism-counter.number";
     private static UserActor actor;
     private static VkApiClient vk;
     private static String clientId;
     private static String clientEmail;
     private static Properties properties;
     private static String clientPass;
-    private long counter = 0;
 
     Drifter(UserActor a, VkApiClient v, String id, String email, String pass, Properties props) {
         actor = a;
@@ -32,9 +33,10 @@ public class Drifter implements Runnable {
                 "/bin/bash",
                 "-c",
                 String.format("uptime -p | awk '{ print $1, $2, $3, $4, " +
-                        "substr($5, 0, length($5)-1); };'; cat $HOME/status;" +
-                        " echo -n '. Profound nonsense #%s: '; /usr/games/fortune -n 50 -s;",
-                        counter)
+                        "substr($5, 0, length($5)-1); };'; more %s;" +
+                        " echo -n '. Profound nonsense #$(more %s): ';" +
+                                "echo $(($(more %s) + 1)) > %s; /usr/games/fortune -n 50 -s;",
+                        status_filename, counter_filename, counter_filename, counter_filename)
             };
             vk.status().set(actor)
                 .text(execute(command))
