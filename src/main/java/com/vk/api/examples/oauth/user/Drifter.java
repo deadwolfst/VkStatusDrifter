@@ -46,6 +46,7 @@ public class Drifter implements Runnable {
             System.out.println("hell1");
             System.out.println(statusCommand);
             String status = execute(command);
+            if (status == null) System.out.println("hell hell helhelhelh lh lhe lhel h");
             System.out.println("hell2");
             System.out.println(statusCommand);
             System.out.println(status);
