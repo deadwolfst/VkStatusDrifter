@@ -30,9 +30,10 @@ public class Drifter implements Runnable {
         String counterFilename = "$HOME/drifter/aphorism-counter.number";
         int vkStatusMaxCharacters = 140;
 
-        final String statusCommand = String.format("uptime -p | awk '{ print $1, $2, $3, $4, " +
-                        "substr($5, 0, length($5)-1); };'; more %s;" +
-                        " echo -n \". Profound nonsense #$(more %s): \";"/* +
+        final String statusCommand = String.format(
+                "uptime -p | awk '{ print $1, $2, $3, $4, " +
+                        "substr($5, 0, length($5)-1); };'; more %s;" /*+
+                        " echo -n \". Profound nonsense #$(more %s): \";" +
                         "echo $(($(more %s) + 1)) > %s; /usr/games/fortune -n 50 -s;"*/,
                 statusFilename, counterFilename, counterFilename, counterFilename);
         try {
