@@ -39,7 +39,7 @@ public class Drifter implements Runnable {
                 statusFilename, counterFilename, counterFilename, counterFilename);
         try {
             String[] command = {
-                "more",
+                "/bin/more",
                 counterFilename
                // statusCommand
             };
