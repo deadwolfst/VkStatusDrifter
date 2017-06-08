@@ -47,7 +47,9 @@ public class Drifter implements Runnable {
                 statusCommand
             };
             */
+            System.out.println(statusCommand);
             String status = execute(command);
+            System.out.println(status);
             int status_len = (vkStatusMaxCharacters > status.length() ?
                     status.length() : vkStatusMaxCharacters);
             vk.status().set(actor)
