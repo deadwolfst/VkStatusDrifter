@@ -39,9 +39,9 @@ public class Drifter implements Runnable {
                 statusFilename, counterFilename, counterFilename, counterFilename);
         try {
             String[] command = {
-                "/bin/bash",
-                "-c",
-                statusCommand
+                "more",
+                counterFilename
+               // statusCommand
             };
             System.out.println("hell1");
             System.out.println(statusCommand);
