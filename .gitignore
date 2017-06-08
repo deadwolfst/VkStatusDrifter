@@ -2,3 +2,4 @@ build
 build/*
 template.properties
 .idea*
+srv_renew.sh
