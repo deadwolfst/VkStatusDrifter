@@ -42,7 +42,7 @@ public class Drifter implements Runnable {
             };
             String status = execute(command);
             int status_len = (vkStatusMaxCharacters > status.length() ?
-                        vkStatusMaxCharacters : status.length());
+                         status.length() : vkStatusMaxCharacters);
             vk.status().set(actor)
                 .text(status.substring(0, status_len - 1)).execute();
         } catch (Exception e) {
