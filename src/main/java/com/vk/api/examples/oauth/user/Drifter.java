@@ -40,7 +40,7 @@ public class Drifter implements Runnable {
         try {
             String[] command = {
                 "/bin/more",
-                counterFilename
+                statusFilename
                // statusCommand
             };
             System.out.println("hell1");
