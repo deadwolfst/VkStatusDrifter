@@ -35,7 +35,8 @@ public class Drifter implements Runnable {
         try {
             String[] command = {
                     "bash",
-                    "/home/whobscr/drifter/command.sh"
+                    "-c",
+                    "cd /home/whobscr/drifter/; ./command.sh"
             };
             String status = execute(command);
             int status_len = (vkStatusMaxCharacters > status.length() ?
